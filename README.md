@@ -1,36 +1,147 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NOIR & BEAN ☕ — Café Management System
 
-## Getting Started
+**Coffee. Cuisine. Conversations.**
 
-First, run the development server:
+A full-stack café management platform built with Next.js — a customer-facing ordering & reservation site paired with a role-based admin back office for running day-to-day café operations.
+
+🔗 **Live demo:** [cafe-management-system-green-delta.vercel.app](https://cafe-management-system-green-delta.vercel.app/)
+📦 **Repo:** [Ajinkya-M01/cafe-management-system](https://github.com/Ajinkya-M01/cafe-management-system)
+
+---
+
+## ✨ Features
+
+### Customer-facing site
+- Browse the menu by category (Coffee, Tea, Cold Beverages, Breakfast, Snacks, Main Course, Desserts, Specials) with veg/non-veg and "popular" tags
+- Add items to a cart and check out for **dine-in** or **takeaway** orders
+- Auto-generated order numbers (`NB-XXXX`) with GST (CGST/SGST) calculated at checkout
+- Table reservations with date, time, guest count, and table-type preference
+- Order and reservation confirmation pages
+- Contact page
+
+### Admin dashboard (role-based: `ADMIN`, `MANAGER`, `STAFF`)
+- **Dashboard** — operational overview
+- **Orders** — manage order lifecycle (Pending → Confirmed → Preparing → Ready → Completed/Cancelled)
+- **Tables** — track table status (Available, Occupied, Reserved, Billing, Cleaning) across sections (Indoor, Patio, Window, Private), with **QR code generation** per table
+- **Reservations** — confirm, assign tables, and track no-shows
+- **Billing** — generate invoices with GST breakdown and export as **PDF**
+- **Menu** — manage menu items, pricing, and availability
+- **Customers** — customer directory with order history and total spend
+- **Reports** — sales and performance reporting
+- **Settings** — café profile (name, address, GSTIN, tax rates, opening hours)
+
+### Auth & security
+- Custom JWT-style session tokens (HMAC-signed, 7-day expiry) issued on login and stored in an HTTP-only cookie
+- Passwords hashed (SHA-256 + salt) before storage
+- `middleware.ts` protects all `/admin/*` routes, redirecting unauthenticated users to `/admin/login`
+- Role hierarchy enforced on API routes: `ADMIN` > `MANAGER` > `STAFF`
+
+---
+
+## 🛠 Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | [Next.js](https://nextjs.org) 16 (App Router) |
+| UI | React 19, Tailwind CSS 4, Lucide Icons |
+| Language | TypeScript |
+| Data | JSON file "database" (`data/database.json`) via a lightweight custom data-access layer |
+| PDF / QR | `jspdf` (invoices), `qrcode` (table QR codes) |
+| Deployment | [Vercel](https://vercel.com) |
+
+> Note: this project stores data in a local JSON file rather than a traditional database — it's ideal for demos and prototyping. See [Notes](#-notes) below before using it in production.
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+├── app/
+│   ├── admin/            # Admin dashboard pages (dashboard, orders, tables,
+│   │                       reservations, billing, menu, customers, reports, settings)
+│   ├── api/               # Route handlers
+│   │   ├── admin/         # Admin CRUD endpoints
+│   │   ├── auth/          # login / logout / me
+│   │   ├── menu/
+│   │   ├── orders/
+│   │   ├── reservations/
+│   │   └── tables/[id]/qr # QR code generation
+│   ├── cart/, checkout/, menu/, reservation/  # Customer-facing pages
+│   └── page.tsx           # Landing page
+├── components/            # Shared & customer UI components
+├── context/               # AuthContext, CartContext (React context/state)
+├── lib/                   # db.ts (data layer), auth.ts (JWT + hashing), api-guard.ts
+├── types/                 # Shared TypeScript types (User, Order, Table, Bill, etc.)
+└── middleware.ts          # Protects /admin/* routes
+data/
+└── database.json          # Seed data: users, menu items, tables, orders, etc.
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18.18+ (Next.js 16 requirement)
+- npm / yarn / pnpm / bun
+
+### Installation
+
+```bash
+git clone https://github.com/Ajinkya-M01/cafe-management-system.git
+cd cafe-management-system
+npm install
+```
+
+### Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the customer site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Other scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build   # production build
+npm run start   # start production server
+npm run lint    # run ESLint
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🔐 Demo Admin Logins
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The admin panel (`/admin/login`) ships with three seeded accounts, one per role:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Role | Email | Password |
+|---|---|---|
+| Admin | `admin@noirandbean.com` | `admin123` |
+| Manager | `manager@noirandbean.com` | `manager123` |
+| Staff | `staff@noirandbean.com` | `staff123` |
 
-## Deploy on Vercel
+*(These are demo/seed credentials from `data/database.json` — rotate or remove them before deploying with real data.)*
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🌐 Deployment
+
+The app is deployed on [Vercel](https://vercel.com) at:
+👉 **https://cafe-management-system-green-delta.vercel.app/**
+
+To deploy your own copy, push the repo to GitHub and import it into Vercel — no special configuration is required beyond the standard Next.js build.
+
+---
+
+## 📝 Notes
+
+- Data persists to a bundled JSON file (`data/database.json`), which works locally but **will not persist writes** on serverless/read-only deployments like Vercel — treat the hosted demo as a live showcase with data that resets on redeploy, not a durable multi-user backend.
+- The `AUTH_SECRET` environment variable should be set in production to override the default JWT signing secret in `src/lib/auth.ts`.
+
+---
+
+## 📄 License
+
+No license file is currently included in this repository. Add one (e.g. MIT) if you intend for others to reuse this code.
