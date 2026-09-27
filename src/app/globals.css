@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+:root {
+  --color-espresso: #1a1412;
+  --color-espresso-deep: #110d0b;
+  --color-espresso-surface: #231b17;
+  --color-espresso-card: #2a211c;
+  --color-cream: #fbf8f3;
+  --color-cream-muted: #f4eee5;
+  --color-cream-sand: #ede3d5;
+  --color-gold: #c5a880;
+  --color-gold-light: #dfc8a5;
+  --color-gold-dark: #9e7f56;
+  --color-charcoal: #171311;
+  --color-olive: #52634e;
+}
+
+@theme inline {
+  --font-serif: var(--font-serif), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --color-espresso: #1a1412;
+  --color-espresso-deep: #110d0b;
+  --color-espresso-surface: #231b17;
+  --color-espresso-card: #2a211c;
+  --color-cream: #fbf8f3;
+  --color-cream-muted: #f4eee5;
+  --color-cream-sand: #ede3d5;
+  --color-gold: #c5a880;
+  --color-gold-light: #dfc8a5;
+  --color-gold-dark: #9e7f56;
+  --color-charcoal: #171311;
+  --color-olive: #52634e;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-charcoal);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1ebd8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c5a880;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9e7f56;
+}
+
+/* Luxury glow and shadows */
+.gold-glow {
+  box-shadow: 0 0 25px rgba(197, 168, 128, 0.25);
+}
+
+.subtle-border {
+  border: 1px solid rgba(197, 168, 128, 0.22);
+}
+
+.card-luxury {
+  background: #ffffff;
+  border: 1px solid rgba(226, 216, 203, 0.8);
+  box-shadow: 0 4px 20px -2px rgba(27, 21, 18, 0.04), 0 2px 6px -1px rgba(27, 21, 18, 0.02);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-luxury:hover {
+  border-color: rgba(197, 168, 128, 0.6);
+  box-shadow: 0 16px 36px -4px rgba(27, 21, 18, 0.08), 0 4px 12px -2px rgba(27, 21, 18, 0.03);
+  transform: translateY(-2px);
+}
+
+.card-dark {
+  background: #231b17;
+  border: 1px solid rgba(197, 168, 128, 0.18);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.35);
+}
+
+/* Thermal receipt printing styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-receipt, #printable-receipt * {
+    visibility: visible;
+  }
+  #printable-receipt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 80mm !important;
+    max-width: 80mm !important;
+    margin: 0 !important;
+    padding: 10px !important;
+    font-size: 11px !important;
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+}
