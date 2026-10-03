@@ -17,9 +17,9 @@ import {
   Flame,
   CheckCircle2,
   MapPin,
-  ShoppingBag,
   Filter,
   X,
+  ArrowRight,
 } from 'lucide-react';
 
 const CATEGORIES: ('All' | Category)[] = [
@@ -127,30 +127,36 @@ function MenuContent() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FBF8F3]">
+    <div className="min-h-screen flex flex-col bg-[#F9F6F1] dark:bg-[#100D0B] text-[#1A1412] dark:text-[#F9F6F1] transition-colors duration-300">
       <Navbar />
 
       {/* Floating Notification */}
       {notification && (
-        <div className="fixed bottom-20 right-6 z-50 bg-[#1A1412] text-[#FBF8F3] px-5 py-3 rounded-xl shadow-2xl border border-[#C5A880]/40 flex items-center gap-3 animate-fade-in">
-          <CheckCircle2 className="w-5 h-5 text-[#C5A880]" />
-          <span className="text-sm font-medium">{notification}</span>
+        <div className="fixed bottom-24 right-6 z-50 bg-[#1A1412] dark:bg-[#231B17] text-[#F9F6F1] px-5 py-3.5 rounded-2xl shadow-2xl border border-[#C5A880]/40 flex items-center gap-3 animate-fade-in backdrop-blur-md">
+          <div className="w-6 h-6 rounded-full bg-[#C5A880]/20 flex items-center justify-center text-[#C5A880]">
+            <CheckCircle2 className="w-4 h-4" />
+          </div>
+          <span className="text-xs font-medium tracking-wide">{notification}</span>
         </div>
       )}
 
-      {/* Hero / Header */}
-      <div className="bg-[#1A1412] text-[#FBF8F3] py-14 px-4 sm:px-6 lg:px-8 border-b border-[#C5A880]/20">
-        <div className="max-w-7xl mx-auto">
+      {/* Hero Header */}
+      <section className="bg-[#1A1412] text-[#F9F6F1] py-14 md:py-20 px-4 sm:px-6 lg:px-8 border-b border-[#C5A880]/20 relative overflow-hidden">
+        {/* Subtle decorative background blur */}
+        <div className="absolute -right-24 -top-24 w-96 h-96 bg-[#C5A880]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -left-24 -bottom-24 w-96 h-96 bg-[#9E7F56]/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto relative z-10">
           {/* Table Banner if customer scanned QR code */}
           {tableNumber && (
-            <div className="mb-6 inline-flex items-center gap-3 px-4 py-2 rounded-xl bg-[#C5A880]/20 border border-[#C5A880]/40 text-[#FBF8F3] text-sm">
+            <div className="mb-6 inline-flex items-center gap-3 px-4 py-2 rounded-xl bg-[#C5A880]/15 border border-[#C5A880]/30 text-[#F9F6F1] text-xs">
               <MapPin className="w-4 h-4 text-[#C5A880]" />
               <span>
-                Ordering for <strong className="text-[#C5A880]">Table {tableNumber}</strong>
+                Ordering for <strong className="text-[#C5A880] font-semibold">Table {tableNumber}</strong>
               </span>
               <button
                 onClick={() => setTableNumber(null)}
-                className="text-xs text-[#E8DFD5]/60 hover:text-white ml-2 underline"
+                className="text-[11px] text-[#D8CCBD]/80 hover:text-white ml-2 underline cursor-pointer"
                 title="Clear table selection"
               >
                 Change
@@ -158,24 +164,24 @@ function MenuContent() {
             </div>
           )}
 
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
               <span className="text-xs uppercase tracking-[0.25em] text-[#C5A880] font-semibold block mb-2">
                 Atelier Culinary & Brew Roster
               </span>
-              <h1 className="font-serif text-4xl sm:text-6xl text-[#FBF8F3]">
+              <h1 className="font-serif text-4xl sm:text-6xl text-[#F9F6F1] tracking-tight">
                 The Digital Menu
               </h1>
             </div>
-            <p className="text-sm text-[#D8CCBD] max-w-md">
-              Freshly prepared to order. Direct single-origin beans, house-cultured ferments, and locally farmed produce.
+            <p className="text-xs sm:text-sm text-[#D8CCBD] max-w-md leading-relaxed">
+              Freshly prepared to order. Single-origin estate beans, house-cultured ferments, artisanal viennoiserie, and locally farmed produce.
             </p>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Filters & Search sticky bar */}
-      <div className="sticky top-20 z-30 bg-[#FBF8F3]/95 backdrop-blur-md border-b border-[#E8DFD5] py-4 px-4 sm:px-6 lg:px-8">
+      {/* Sticky Filters & Search */}
+      <div className="sticky top-20 z-30 bg-[#F9F6F1]/95 dark:bg-[#100D0B]/95 backdrop-blur-md border-b border-[#E8DFD5] dark:border-[#2E241F] py-4 px-4 sm:px-6 lg:px-8 transition-colors">
         <div className="max-w-7xl mx-auto space-y-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             {/* Search Input */}
@@ -186,12 +192,13 @@ function MenuContent() {
                 placeholder="Search coffee, mains, desserts..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-9 py-2.5 rounded-full bg-white border border-[#D8CCBD] text-xs text-[#1A1412] placeholder-[#8C7A6D] focus:outline-none focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880] shadow-2xs"
+                className="w-full pl-10 pr-9 py-2.5 rounded-full bg-white dark:bg-[#1A1412] border border-[#D8CCBD] dark:border-[#2E241F] text-xs text-[#1A1412] dark:text-[#F9F6F1] placeholder-[#8C7A6D] focus:outline-none focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880] shadow-2xs transition-colors"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8C7A6D] hover:text-[#1A1412]"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8C7A6D] hover:text-[#1A1412] dark:hover:text-white cursor-pointer"
+                  aria-label="Clear search"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -202,10 +209,10 @@ function MenuContent() {
             <div className="flex items-center gap-3 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
               <button
                 onClick={() => setVegOnly(!vegOnly)}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium border transition-all shrink-0 cursor-pointer ${
+                className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium border transition-all shrink-0 cursor-pointer ${
                   vegOnly
                     ? 'bg-emerald-800 text-white border-emerald-800 shadow-xs'
-                    : 'bg-white text-[#4A3E37] border-[#D8CCBD] hover:border-emerald-600'
+                    : 'bg-white dark:bg-[#1A1412] text-[#4A3E37] dark:text-[#D8CCBD] border-[#D8CCBD] dark:border-[#2E241F] hover:border-emerald-600'
                 }`}
               >
                 <span className="w-2 h-2 rounded-full bg-emerald-500" />
@@ -214,20 +221,20 @@ function MenuContent() {
 
               <button
                 onClick={() => setOnlyPopular(!onlyPopular)}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium border transition-all shrink-0 cursor-pointer ${
+                className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium border transition-all shrink-0 cursor-pointer ${
                   onlyPopular
-                    ? 'bg-[#1A1412] text-[#C5A880] border-[#1A1412] shadow-xs'
-                    : 'bg-white text-[#4A3E37] border-[#D8CCBD] hover:border-[#C5A880]'
+                    ? 'bg-[#1A1412] dark:bg-[#C5A880] text-[#C5A880] dark:text-[#1A1412] border-[#1A1412] dark:border-[#C5A880] shadow-xs'
+                    : 'bg-white dark:bg-[#1A1412] text-[#4A3E37] dark:text-[#D8CCBD] border-[#D8CCBD] dark:border-[#2E241F] hover:border-[#C5A880]'
                 }`}
               >
-                <Sparkles className="w-3.5 h-3.5 text-[#C5A880]" />
-                <span>Popular Curations</span>
+                <Sparkles className="w-3.5 h-3.5 text-[#C5A880] dark:text-[#1A1412]" />
+                <span>Signature Curations</span>
               </button>
             </div>
           </div>
 
           {/* Categories Pill Scroller */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
             {CATEGORIES.map((cat) => {
               const active = selectedCategory === cat;
               return (
@@ -236,8 +243,8 @@ function MenuContent() {
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-4 py-2 rounded-full text-xs font-medium tracking-wider uppercase transition-all shrink-0 cursor-pointer ${
                     active
-                      ? 'bg-[#1A1412] text-[#FBF8F3] shadow-sm'
-                      : 'bg-white text-[#5F5046] border border-[#E8DFD5] hover:border-[#C5A880] hover:text-[#1A1412]'
+                      ? 'bg-[#1A1412] dark:bg-[#C5A880] text-[#F9F6F1] dark:text-[#1A1412] shadow-sm font-semibold'
+                      : 'bg-white dark:bg-[#1A1412] text-[#5F5046] dark:text-[#D8CCBD] border border-[#E8DFD5] dark:border-[#2E241F] hover:border-[#C5A880] hover:text-[#1A1412] dark:hover:text-white'
                   }`}
                 >
                   {cat}
@@ -249,17 +256,17 @@ function MenuContent() {
       </div>
 
       {/* Menu Item Grid */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
         {loading ? (
           <div className="py-24 text-center">
             <div className="inline-block w-8 h-8 border-2 border-[#C5A880] border-t-transparent rounded-full animate-spin mb-4" />
-            <p className="text-xs uppercase tracking-widest text-[#8C7A6D]">Loading artisanal menu...</p>
+            <p className="text-xs uppercase tracking-widest text-[#8C7A6D]">Loading artisanal catalog...</p>
           </div>
         ) : filteredItems.length === 0 ? (
-          <div className="py-24 text-center max-w-md mx-auto">
+          <div className="py-20 text-center max-w-md mx-auto rounded-3xl bg-white dark:bg-[#181310] border border-[#E8DFD5] dark:border-[#2E241F] p-8 shadow-xs">
             <Filter className="w-12 h-12 text-[#8C7A6D]/50 mx-auto mb-3" />
-            <h3 className="font-serif text-2xl text-[#1A1412] mb-2">No matching dishes found</h3>
-            <p className="text-xs text-[#736357] mb-6">
+            <h3 className="font-serif text-2xl text-[#1A1412] dark:text-[#F9F6F1] mb-2 font-medium">No matching items found</h3>
+            <p className="text-xs text-[#736357] dark:text-[#A8988B] mb-6 leading-relaxed">
               Try adjusting your category filter, dietary toggles, or search keywords.
             </p>
             <button
@@ -269,22 +276,22 @@ function MenuContent() {
                 setVegOnly(false);
                 setOnlyPopular(false);
               }}
-              className="px-6 py-2 rounded-full bg-[#1A1412] text-[#FBF8F3] text-xs font-medium"
+              className="px-6 py-2.5 rounded-full bg-[#1A1412] dark:bg-[#C5A880] text-[#F9F6F1] dark:text-[#1A1412] text-xs font-semibold uppercase tracking-wider cursor-pointer"
             >
-              Reset Filters
+              Reset All Filters
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {filteredItems.map((item) => {
               const qty = itemQuantities[item.id] || 1;
               return (
                 <div
                   key={item.id}
-                  className="card-luxury rounded-2xl overflow-hidden flex flex-col group border border-[#E8DFD5] bg-white"
+                  className="rounded-2xl overflow-hidden flex flex-col group border border-[#E8DFD5] dark:border-[#2E241F] bg-white dark:bg-[#181310] hover:shadow-xl hover:border-[#C5A880]/60 dark:hover:border-[#C5A880]/40 transition-all duration-300"
                 >
                   {/* Image and Badges */}
-                  <div className="relative h-56 w-full overflow-hidden bg-[#E8DFD5]">
+                  <div className="relative h-56 w-full overflow-hidden bg-[#E8DFD5] dark:bg-[#231B17]">
                     <Image
                       src={item.image}
                       alt={item.name}
@@ -294,13 +301,13 @@ function MenuContent() {
                     />
 
                     {/* Veg / Non-Veg Indicator */}
-                    <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-xs rounded-full px-2.5 py-1 flex items-center gap-1.5 shadow-sm">
+                    <div className="absolute top-3 left-3 bg-white/95 dark:bg-[#1A1412]/95 backdrop-blur-xs rounded-full px-2.5 py-1 flex items-center gap-1.5 shadow-sm">
                       <span
-                        className={`w-2.5 h-2.5 rounded-full ${
+                        className={`w-2 h-2 rounded-full ${
                           item.isVeg ? 'bg-emerald-600' : 'bg-red-600'
                         }`}
                       />
-                      <span className="text-[10px] font-semibold text-[#1A1412] uppercase tracking-wider">
+                      <span className="text-[10px] font-semibold text-[#1A1412] dark:text-[#F9F6F1] uppercase tracking-wider">
                         {item.isVeg ? 'Veg' : 'Non-Veg'}
                       </span>
                     </div>
@@ -317,20 +324,20 @@ function MenuContent() {
                   {/* Body Content */}
                   <div className="p-6 flex-1 flex flex-col justify-between">
                     <div>
-                      <div className="flex items-start justify-between gap-2 mb-1.5">
-                        <h3 className="font-serif text-lg font-medium text-[#1A1412] group-hover:text-[#9E7F56] transition-colors leading-snug">
+                      <div className="flex items-start justify-between gap-2 mb-2">
+                        <h3 className="font-serif text-lg font-medium text-[#1A1412] dark:text-[#F9F6F1] group-hover:text-[#9E7F56] dark:group-hover:text-[#C5A880] transition-colors leading-snug">
                           {item.name}
                         </h3>
-                        <span className="font-semibold text-base text-[#1A1412] shrink-0">
+                        <span className="font-semibold text-base text-[#1A1412] dark:text-[#F9F6F1] shrink-0">
                           ₹{item.price}
                         </span>
                       </div>
 
-                      <p className="text-xs text-[#736357] leading-relaxed mb-4">
+                      <p className="text-xs text-[#736357] dark:text-[#A8988B] leading-relaxed mb-4 line-clamp-2">
                         {item.description}
                       </p>
 
-                      {/* Prep time & calories */}
+                      {/* Prep time, calories, category */}
                       <div className="flex items-center gap-4 text-[11px] text-[#8C7A6D] mb-4">
                         <span className="flex items-center gap-1">
                           <Clock className="w-3.5 h-3.5 text-[#C5A880]" />
@@ -342,29 +349,29 @@ function MenuContent() {
                             <span>{item.calories} kcal</span>
                           </span>
                         )}
-                        <span className="text-[#A8988B] uppercase tracking-wider text-[10px]">
+                        <span className="text-[#A8988B] dark:text-[#8C7A6D] uppercase tracking-wider text-[10px] ml-auto">
                           {item.category}
                         </span>
                       </div>
                     </div>
 
                     {/* Order Action Row */}
-                    <div className="pt-4 border-t border-[#E8DFD5] flex items-center justify-between gap-3">
+                    <div className="pt-4 border-t border-[#E8DFD5] dark:border-[#2E241F] flex items-center justify-between gap-3">
                       {/* Local Quantity Stepper */}
-                      <div className="flex items-center border border-[#D8CCBD] rounded-lg bg-[#FAF7F2] overflow-hidden">
+                      <div className="flex items-center border border-[#D8CCBD] dark:border-[#2E241F] rounded-xl bg-[#FAF7F2] dark:bg-[#1F1915] overflow-hidden">
                         <button
                           onClick={() => handleQtyChange(item.id, -1)}
-                          className="px-2.5 py-1 text-[#1A1412] hover:bg-[#E8DFD5] transition-colors cursor-pointer"
+                          className="px-2.5 py-1.5 text-[#1A1412] dark:text-[#F9F6F1] hover:bg-[#E8DFD5] dark:hover:bg-[#2A211C] transition-colors cursor-pointer"
                           aria-label="Decrease quantity"
                         >
                           <Minus className="w-3 h-3" />
                         </button>
-                        <span className="px-2 text-xs font-bold text-[#1A1412]">
+                        <span className="px-2 text-xs font-bold text-[#1A1412] dark:text-[#F9F6F1]">
                           {qty}
                         </span>
                         <button
                           onClick={() => handleQtyChange(item.id, 1)}
-                          className="px-2.5 py-1 text-[#1A1412] hover:bg-[#E8DFD5] transition-colors cursor-pointer"
+                          className="px-2.5 py-1.5 text-[#1A1412] dark:text-[#F9F6F1] hover:bg-[#E8DFD5] dark:hover:bg-[#2A211C] transition-colors cursor-pointer"
                           aria-label="Increase quantity"
                         >
                           <Plus className="w-3 h-3" />
@@ -374,7 +381,7 @@ function MenuContent() {
                       {/* Add Button */}
                       <button
                         onClick={() => handleAdd(item)}
-                        className="flex-1 py-2 px-4 rounded-xl bg-[#1A1412] hover:bg-[#C5A880] text-[#FBF8F3] hover:text-[#1A1412] text-xs uppercase tracking-wider font-semibold transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                        className="flex-1 py-2.5 px-4 rounded-xl bg-[#1A1412] dark:bg-[#C5A880] hover:bg-[#C5A880] dark:hover:bg-[#D8BE96] text-[#F9F6F1] dark:text-[#1A1412] hover:text-[#1A1412] text-xs uppercase tracking-wider font-semibold transition-all shadow-xs flex items-center justify-center gap-1.5 cursor-pointer"
                       >
                         <Plus className="w-3.5 h-3.5" />
                         <span>Add to Order</span>
@@ -390,8 +397,8 @@ function MenuContent() {
 
       {/* Floating Bottom Cart Bar (Appears when items are in cart) */}
       {itemCount > 0 && (
-        <div className="fixed bottom-4 inset-x-4 max-w-lg mx-auto z-40">
-          <div className="p-3.5 rounded-2xl bg-[#1A1412] text-[#FBF8F3] shadow-2xl border border-[#C5A880]/40 flex items-center justify-between">
+        <div className="fixed bottom-5 inset-x-4 max-w-lg mx-auto z-40 animate-fade-in">
+          <div className="p-3.5 rounded-2xl bg-[#1A1412] text-[#F9F6F1] shadow-2xl border border-[#C5A880]/40 flex items-center justify-between backdrop-blur-md">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-[#C5A880] text-[#1A1412] flex items-center justify-center font-bold text-sm">
                 {itemCount}
@@ -400,23 +407,23 @@ function MenuContent() {
                 <p className="text-xs text-[#C5A880] uppercase tracking-wider">
                   {tableNumber ? `Table ${tableNumber} Order` : 'Order Total'}
                 </p>
-                <p className="text-base font-bold text-[#FBF8F3]">₹{grandTotal.toFixed(2)}</p>
+                <p className="text-base font-bold text-[#F9F6F1]">₹{grandTotal.toFixed(2)}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="px-4 py-2 rounded-xl bg-[#2A211C] hover:bg-[#342A24] border border-[#C5A880]/30 text-xs font-semibold text-[#FBF8F3] transition-colors cursor-pointer"
+                className="px-3.5 py-2 rounded-xl bg-[#2A211C] hover:bg-[#342A24] border border-[#C5A880]/30 text-xs font-semibold text-[#F9F6F1] transition-colors cursor-pointer"
               >
                 View Order
               </button>
               <Link
                 href="/checkout"
-                className="px-5 py-2 rounded-xl bg-[#C5A880] hover:bg-[#D4B68D] text-[#1A1412] text-xs font-bold uppercase tracking-wider transition-colors shadow-md flex items-center gap-1.5"
+                className="px-4 py-2 rounded-xl bg-[#C5A880] hover:bg-[#D4B68D] text-[#1A1412] text-xs font-bold uppercase tracking-wider transition-colors shadow-md flex items-center gap-1.5"
               >
                 <span>Checkout</span>
-                <ShoppingBag className="w-3.5 h-3.5" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </div>
@@ -432,7 +439,7 @@ export default function MenuPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-[#FBF8F3]">
+        <div className="min-h-screen flex items-center justify-center bg-[#F9F6F1] dark:bg-[#100D0B]">
           <div className="inline-block w-8 h-8 border-2 border-[#C5A880] border-t-transparent rounded-full animate-spin" />
         </div>
       }

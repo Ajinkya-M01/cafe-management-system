@@ -435,6 +435,36 @@
   ],
   "orders": [
     {
+      "id": "ord_1791058144955",
+      "orderNumber": "NB-5781",
+      "customerName": "tyuj",
+      "customerPhone": "7423545541",
+      "customerEmail": "mathpatiajinkya01@gmail.com",
+      "type": "takeaway",
+      "pickupTime": "15-20 Mins",
+      "items": [
+        {
+          "menuItemId": "menu_01",
+          "name": "Signature Smoked Sea Salt Cortado",
+          "price": 340,
+          "quantity": 1,
+          "notes": "",
+          "isVeg": true,
+          "image": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
+        }
+      ],
+      "subtotal": 340,
+      "discountAmount": 0,
+      "cgst": 8.5,
+      "sgst": 8.5,
+      "grandTotal": 357,
+      "status": "Pending",
+      "paymentStatus": "Pending",
+      "notes": "",
+      "createdAt": "2026-10-03T20:09:04.955Z",
+      "updatedAt": "2026-10-03T20:09:04.955Z"
+    },
+    {
       "id": "ord_1790487360749",
       "orderNumber": "NB-5593",
       "customerName": "Ajinkya M",
@@ -968,6 +998,15 @@
       "email": "",
       "totalOrders": 1,
       "totalSpend": 1249.5,
+      "lastVisit": "Today"
+    },
+    {
+      "id": "cust_1791058144955",
+      "name": "tyuj",
+      "phone": "7423545541",
+      "email": "mathpatiajinkya01@gmail.com",
+      "totalOrders": 1,
+      "totalSpend": 357,
       "lastVisit": "Today"
     }
   ],

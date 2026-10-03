@@ -8,13 +8,13 @@ import {
   Calendar as CalendarIcon,
   Clock,
   Users,
-  MapPin,
   CheckCircle,
   AlertCircle,
   Sparkles,
   Phone,
   Mail,
   User,
+  MessageSquare,
 } from 'lucide-react';
 
 const TIME_SLOTS = [
@@ -97,44 +97,45 @@ export default function ReservationPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FBF8F3]">
+    <div className="min-h-screen flex flex-col bg-[#F9F6F1] dark:bg-[#100D0B] text-[#1A1412] dark:text-[#F9F6F1] transition-colors duration-300">
       <Navbar />
 
       {/* Header */}
-      <div className="bg-[#1A1412] text-[#FBF8F3] py-16 px-4 sm:px-6 lg:px-8 border-b border-[#C5A880]/20">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#C5A880]/15 border border-[#C5A880]/30 text-xs uppercase tracking-[0.25em] text-[#C5A880] mb-4">
+      <section className="bg-[#1A1412] text-[#F9F6F1] py-16 md:py-20 px-4 sm:px-6 lg:px-8 border-b border-[#C5A880]/20 relative overflow-hidden">
+        <div className="absolute -right-24 -top-24 w-96 h-96 bg-[#C5A880]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#C5A880]/15 border border-[#C5A880]/30 text-xs uppercase tracking-[0.25em] text-[#C5A880] mb-4">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Table Reservations</span>
           </div>
-          <h1 className="font-serif text-4xl sm:text-6xl text-[#FBF8F3] mb-4">
+          <h1 className="font-serif text-4xl sm:text-6xl text-[#F9F6F1] mb-4 tracking-tight">
             Curate Your Table
           </h1>
-          <p className="text-sm text-[#D8CCBD] max-w-xl mx-auto leading-relaxed">
-            We reserve a limited number of tables daily to preserve an unhurried, peaceful dining atmosphere.
+          <p className="text-xs sm:text-sm text-[#D8CCBD] max-w-xl mx-auto leading-relaxed">
+            We reserve a limited number of tables daily to preserve an unhurried, peaceful dining atmosphere for our guests.
           </p>
         </div>
-      </div>
+      </section>
 
-      <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
         {errorMessage && (
-          <div className="mb-8 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-900 text-xs flex items-center gap-3">
-            <AlertCircle className="w-5 h-5 shrink-0 text-red-700" />
+          <div className="mb-8 p-4 rounded-2xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/50 text-red-900 dark:text-red-300 text-xs flex items-center gap-3">
+            <AlertCircle className="w-5 h-5 shrink-0 text-red-700 dark:text-red-400" />
             <span>{errorMessage}</span>
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Step 1: Date, Time & Party Size */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#E8DFD5] shadow-sm space-y-6">
-            <h3 className="font-serif text-2xl text-[#1A1412] border-b border-[#E8DFD5] pb-3">
+          <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#181310] border border-[#E8DFD5] dark:border-[#2E241F] shadow-sm space-y-6 transition-colors">
+            <h3 className="font-serif text-2xl text-[#1A1412] dark:text-[#F9F6F1] border-b border-[#E8DFD5] dark:border-[#2E241F] pb-3">
               1. Date & Time
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <label className="block text-xs font-semibold text-[#1A1412] uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                  <CalendarIcon className="w-4 h-4 text-[#9E7F56]" />
+                <label className="block text-xs font-semibold text-[#1A1412] dark:text-[#F9F6F1] uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <CalendarIcon className="w-4 h-4 text-[#9E7F56] dark:text-[#C5A880]" />
                   <span>Reservation Date *</span>
                 </label>
                 <input
@@ -143,13 +144,13 @@ export default function ReservationPage() {
                   min={todayStr}
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-[#D8CCBD] text-sm text-[#1A1412] focus:outline-none focus:border-[#C5A880] bg-[#FAF7F2]"
+                  className="w-full px-4 py-3 rounded-xl border border-[#D8CCBD] dark:border-[#2E241F] text-sm text-[#1A1412] dark:text-[#F9F6F1] focus:outline-none focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880] bg-[#FAF7F2] dark:bg-[#1A1412]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#1A1412] uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                  <Users className="w-4 h-4 text-[#9E7F56]" />
+                <label className="block text-xs font-semibold text-[#1A1412] dark:text-[#F9F6F1] uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                  <Users className="w-4 h-4 text-[#9E7F56] dark:text-[#C5A880]" />
                   <span>Number of Guests *</span>
                 </label>
                 <div className="flex items-center gap-2">
@@ -160,8 +161,8 @@ export default function ReservationPage() {
                       onClick={() => setGuests(num)}
                       className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                         guests === num
-                          ? 'bg-[#1A1412] text-[#C5A880] shadow-xs'
-                          : 'bg-[#FAF7F2] text-[#4A3E37] border border-[#D8CCBD] hover:border-[#C5A880]'
+                          ? 'bg-[#1A1412] dark:bg-[#C5A880] text-[#C5A880] dark:text-[#1A1412] shadow-xs'
+                          : 'bg-[#FAF7F2] dark:bg-[#1A1412] text-[#4A3E37] dark:text-[#D8CCBD] border border-[#D8CCBD] dark:border-[#2E241F] hover:border-[#C5A880]'
                       }`}
                     >
                       {num}
@@ -172,8 +173,8 @@ export default function ReservationPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#1A1412] uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                <Clock className="w-4 h-4 text-[#9E7F56]" />
+              <label className="block text-xs font-semibold text-[#1A1412] dark:text-[#F9F6F1] uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                <Clock className="w-4 h-4 text-[#9E7F56] dark:text-[#C5A880]" />
                 <span>Available Dining Slots *</span>
               </label>
               <div className="grid grid-cols-3 sm:grid-cols-6 gap-2.5">
@@ -187,7 +188,7 @@ export default function ReservationPage() {
                       className={`py-2 px-3 rounded-xl text-xs font-semibold tracking-wider transition-all cursor-pointer ${
                         active
                           ? 'bg-[#C5A880] text-[#1A1412] shadow-sm font-bold'
-                          : 'bg-[#FAF7F2] text-[#5F5046] border border-[#E8DFD5] hover:border-[#C5A880]'
+                          : 'bg-[#FAF7F2] dark:bg-[#1A1412] text-[#5F5046] dark:text-[#D8CCBD] border border-[#E8DFD5] dark:border-[#2E241F] hover:border-[#C5A880]'
                       }`}
                     >
                       {slot}
@@ -199,8 +200,8 @@ export default function ReservationPage() {
           </div>
 
           {/* Step 2: Seating Ambiance */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#E8DFD5] shadow-sm space-y-4">
-            <h3 className="font-serif text-2xl text-[#1A1412] border-b border-[#E8DFD5] pb-3">
+          <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#181310] border border-[#E8DFD5] dark:border-[#2E241F] shadow-sm space-y-4 transition-colors">
+            <h3 className="font-serif text-2xl text-[#1A1412] dark:text-[#F9F6F1] border-b border-[#E8DFD5] dark:border-[#2E241F] pb-3">
               2. Ambiance Preference
             </h3>
 
@@ -215,16 +216,16 @@ export default function ReservationPage() {
                     className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
                       active
                         ? 'border-[#C5A880] bg-[#C5A880]/10 shadow-xs ring-1 ring-[#C5A880]'
-                        : 'border-[#E8DFD5] hover:border-[#D8CCBD]'
+                        : 'border-[#E8DFD5] dark:border-[#2E241F] hover:border-[#D8CCBD]'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1">
-                      <span className="font-serif text-base font-medium text-[#1A1412]">
+                      <span className="font-serif text-base font-medium text-[#1A1412] dark:text-[#F9F6F1]">
                         {pref.label}
                       </span>
-                      {active && <CheckCircle className="w-4 h-4 text-[#9E7F56]" />}
+                      {active && <CheckCircle className="w-4 h-4 text-[#9E7F56] dark:text-[#C5A880]" />}
                     </div>
-                    <p className="text-xs text-[#736357]">{pref.desc}</p>
+                    <p className="text-xs text-[#736357] dark:text-[#A8988B]">{pref.desc}</p>
                   </button>
                 );
               })}
@@ -232,15 +233,15 @@ export default function ReservationPage() {
           </div>
 
           {/* Step 3: Guest Details & Special Requests */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#E8DFD5] shadow-sm space-y-6">
-            <h3 className="font-serif text-2xl text-[#1A1412] border-b border-[#E8DFD5] pb-3">
+          <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-[#181310] border border-[#E8DFD5] dark:border-[#2E241F] shadow-sm space-y-6 transition-colors">
+            <h3 className="font-serif text-2xl text-[#1A1412] dark:text-[#F9F6F1] border-b border-[#E8DFD5] dark:border-[#2E241F] pb-3">
               3. Guest Details & Notes
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <label className="block text-xs font-semibold text-[#1A1412] uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                  <User className="w-3.5 h-3.5 text-[#9E7F56]" />
+                <label className="block text-xs font-semibold text-[#1A1412] dark:text-[#F9F6F1] uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                  <User className="w-3.5 h-3.5 text-[#9E7F56] dark:text-[#C5A880]" />
                   <span>Full Name *</span>
                 </label>
                 <input
@@ -249,13 +250,13 @@ export default function ReservationPage() {
                   placeholder="e.g. Rohan Deshmukh"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-[#D8CCBD] text-xs text-[#1A1412] focus:outline-none focus:border-[#C5A880]"
+                  className="w-full px-4 py-3 rounded-xl border border-[#D8CCBD] dark:border-[#2E241F] bg-white dark:bg-[#1A1412] text-xs text-[#1A1412] dark:text-[#F9F6F1] focus:outline-none focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#1A1412] uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                  <Phone className="w-3.5 h-3.5 text-[#9E7F56]" />
+                <label className="block text-xs font-semibold text-[#1A1412] dark:text-[#F9F6F1] uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                  <Phone className="w-3.5 h-3.5 text-[#9E7F56] dark:text-[#C5A880]" />
                   <span>Phone Number *</span>
                 </label>
                 <input
@@ -264,13 +265,13 @@ export default function ReservationPage() {
                   placeholder="+91 98210 33499"
                   value={customerPhone}
                   onChange={(e) => setCustomerPhone(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-[#D8CCBD] text-xs text-[#1A1412] focus:outline-none focus:border-[#C5A880]"
+                  className="w-full px-4 py-3 rounded-xl border border-[#D8CCBD] dark:border-[#2E241F] bg-white dark:bg-[#1A1412] text-xs text-[#1A1412] dark:text-[#F9F6F1] focus:outline-none focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880]"
                 />
               </div>
 
               <div className="sm:col-span-2">
-                <label className="block text-xs font-semibold text-[#1A1412] uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                  <Mail className="w-3.5 h-3.5 text-[#9E7F56]" />
+                <label className="block text-xs font-semibold text-[#1A1412] dark:text-[#F9F6F1] uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                  <Mail className="w-3.5 h-3.5 text-[#9E7F56] dark:text-[#C5A880]" />
                   <span>Email Address *</span>
                 </label>
                 <input
@@ -279,20 +280,21 @@ export default function ReservationPage() {
                   placeholder="rohan@example.com"
                   value={customerEmail}
                   onChange={(e) => setCustomerEmail(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-[#D8CCBD] text-xs text-[#1A1412] focus:outline-none focus:border-[#C5A880]"
+                  className="w-full px-4 py-3 rounded-xl border border-[#D8CCBD] dark:border-[#2E241F] bg-white dark:bg-[#1A1412] text-xs text-[#1A1412] dark:text-[#F9F6F1] focus:outline-none focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880]"
                 />
               </div>
 
               <div className="sm:col-span-2">
-                <label className="block text-xs font-semibold text-[#1A1412] uppercase tracking-wider mb-1">
-                  Special Occasion or Dietary Preferences
+                <label className="block text-xs font-semibold text-[#1A1412] dark:text-[#F9F6F1] uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                  <MessageSquare className="w-3.5 h-3.5 text-[#9E7F56] dark:text-[#C5A880]" />
+                  <span>Special Occasion or Dietary Preferences</span>
                 </label>
                 <textarea
                   rows={3}
                   placeholder="e.g. Celebrating our anniversary, quiet corner table requested..."
                   value={specialRequests}
                   onChange={(e) => setSpecialRequests(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-[#D8CCBD] text-xs text-[#1A1412] focus:outline-none focus:border-[#C5A880]"
+                  className="w-full px-4 py-3 rounded-xl border border-[#D8CCBD] dark:border-[#2E241F] bg-white dark:bg-[#1A1412] text-xs text-[#1A1412] dark:text-[#F9F6F1] focus:outline-none focus:border-[#C5A880] focus:ring-1 focus:ring-[#C5A880]"
                 />
               </div>
             </div>
@@ -303,15 +305,15 @@ export default function ReservationPage() {
             <button
               type="submit"
               disabled={submitting}
-              className="px-10 py-4 rounded-full bg-[#1A1412] hover:bg-[#C5A880] text-[#FBF8F3] hover:text-[#1A1412] text-xs uppercase tracking-[0.2em] font-bold transition-all shadow-xl disabled:opacity-60 cursor-pointer"
+              className="px-10 py-4 rounded-full bg-[#1A1412] dark:bg-[#C5A880] hover:bg-[#C5A880] dark:hover:bg-[#D8BE96] text-[#F9F6F1] dark:text-[#1A1412] hover:text-[#1A1412] text-xs uppercase tracking-[0.2em] font-bold transition-all shadow-xl disabled:opacity-60 cursor-pointer"
             >
               {submitting ? (
-                <div className="inline-block w-4 h-4 border-2 border-[#C5A880] border-t-transparent rounded-full animate-spin" />
+                <div className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
               ) : (
                 <span>Confirm Reservation Booking</span>
               )}
             </button>
-            <p className="text-[11px] text-[#8C7A6D] mt-3">
+            <p className="text-[11px] text-[#8C7A6D] dark:text-[#A8988B] mt-3">
               We hold reserved tables for 15 minutes past the booking time. No advance booking deposit required.
             </p>
           </div>
